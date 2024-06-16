@@ -20,4 +20,8 @@ pub struct Args {
     /// Don't display the banner and other info
     #[arg(short, long)]
     pub quiet: bool,
+
+    /// Disable colors in the output
+    #[arg(long)]
+    pub no_color: bool,
 }
