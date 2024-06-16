@@ -1,3 +1,5 @@
+/// This file contains the command line arguments parser
+
 use clap::Parser;
 
 #[derive(Parser, Debug)]
@@ -5,17 +7,17 @@ use clap::Parser;
 pub struct Args {
     /// The target URL
     #[arg(short, long)]
-    url: String,
+    pub url: String,
 
     /// The path to the wordlist to use
     #[arg(short, long)]
-    wordlist: String,
+    pub wordlist: String,
 
     /// The number of concurrent threads
     #[arg(short, long, default_value_t=10)]
-    threads: u8,
+    pub threads: u8,
 
     /// Don't display the banner and other info
     #[arg(short, long)]
-    quiet: bool,
+    pub quiet: bool,
 }

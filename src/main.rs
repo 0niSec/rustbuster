@@ -1,7 +1,11 @@
-use rustbuster::cli::{self, Args};
+mod cli;
+mod parser;
+
+use cli::Args;
+
 
 fn main() {
-    let args = <Args as clap::Parser>::parse(); // Not sure this is the right way to do this
+    let url = parser::parse_url();
     
-    println!("{:?}", args);
+    println!("{:?}", url);
 }
