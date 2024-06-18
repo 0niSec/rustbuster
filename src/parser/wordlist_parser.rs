@@ -20,6 +20,4 @@ pub fn parse_wordlist(wordlist: &str) -> std::path::PathBuf {
         eprintln!("{}", format!("Error: The wordlist path is invalid.").red());
         std::process::exit(1);
     }
-
-    
 }
