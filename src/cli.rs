@@ -24,4 +24,16 @@ pub struct Args {
     /// Disable colors in the output
     #[arg(long)]
     pub no_color: bool,
+
+    /// Status Codes allow list (these will be returned)
+    #[arg(short, long)]
+    pub status_codes: Vec<String>,
+
+    /// Status codes blacklist (these will not be returned)
+    #[arg(short='b', long, default_values=vec!["404"])]
+    pub status_codes_blacklist: Vec<String>,
+
+    /// Set the User-Agent string
+    #[arg(short='a', long, default_value=concat!("rustbuster/", env!("CARGO_PKG_VERSION")))]
+    pub user_agent: String,
 }
