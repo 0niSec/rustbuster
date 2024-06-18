@@ -3,7 +3,12 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(version, name = "rustbuster", about = "A simple directory brute force tool written in Rust.", author="0niSec")]
+#[command(
+    version=env!("CARGO_PKG_VERSION"), 
+    name = "rustbuster", 
+    about = "A simple directory brute force tool written in Rust.", 
+    author="0niSec",
+)]
 pub struct Args {
     /// The target URL
     #[arg(short, long)]
