@@ -3,6 +3,7 @@ use clap::Parser;
 mod cli;
 mod parser;
 mod banner;
+mod scanner;
 
 fn main() {
     // Parse the args using the Args struct from cli.rs
