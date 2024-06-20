@@ -1,5 +1,6 @@
 use std::fs::File;
-use std::path::Path;
+use std::io::{BufRead, BufReader};
+use std::path::{Path, PathBuf};
 use colored::*;
 
 // Function to check that the wordlist is a valid path and return the PathBuf
@@ -49,16 +50,12 @@ pub fn is_empty(wordlist: &str) -> bool {
 }
 
 // Function to read the wordlist file and split it into a vector of strings
-pub fn read_wordlist(wordlist: &std::path::PathBuf) -> Vec<String> {
-    let contents = std::fs::read_to_string(wordlist);
-    match contents {
-        Ok(contents) => {
-            let lines: Vec<String> = contents.lines().map(|s| s.to_string()).collect();
-            lines
-        },
-        Err(e) => {
-            eprintln!("{}", format!("Error: {}", e).red());
-            std::process::exit(1);
-        }
-    }
+pub fn read_wordlist(wordlist_path: &PathBuf) -> Vec<String> {
+    let file = File::open(wordlist_path).expect("Could not open wordlist file");
+    let reader = BufReader::new(file);
+
+    // Ignore lines starting with '#'
+    // This should hopefully be good enough for most wordlists
+    // No idea how gobuster does it for every single wordlist lol
+    reader.lines().filter_map(Result::ok).filter(|line| !line.starts_with('#')).collect()
 }

@@ -41,4 +41,8 @@ pub struct Args {
     /// Set the User-Agent string
     #[arg(short='a', long, default_value=concat!("rustbuster/", env!("CARGO_PKG_VERSION")))]
     pub user_agent: String,
+
+    /// Follow redirects
+    #[arg(short='r', long, default_value="none")]
+    pub redirect_policy: String,
 }

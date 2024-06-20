@@ -23,5 +23,5 @@ async fn main() {
 
     // Create a new scanner instance
     let scanner = buster::Scanner::new(args);
-    scanner.scan().await;
+    scanner.scan().await.unwrap();
 }
