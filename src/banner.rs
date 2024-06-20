@@ -39,6 +39,7 @@ pub fn print_info(args: &cli::Args) {
     println!("{:<width$} {}", "[+] Threads:", args.threads, width = 30);
     println!("{:<width$} {}", "[+] Negative Status Codes:", args.status_codes_blacklist.join(", "), width = 30);
     println!("{:<width$} {}", "[+] User Agent:", args.user_agent, width = 30);
+    println!("{:<width$} {}", "[+] Timeout:", args.timeout, width = 30);
     println!("{}", "=".repeat(WRAP_WIDTH));
 }
 
