@@ -47,6 +47,6 @@ pub struct Args {
     pub redirect_policy: String,
 
     /// HTTP Timeout
-    #[arg(short, long, default_value_t=10)]
+    #[arg(long, default_value_t=10)]
     pub timeout: u64,
 }
