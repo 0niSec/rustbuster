@@ -19,6 +19,7 @@ pub async fn build_request(target_url: Url, client: &reqwest::Client) -> reqwest
 pub async fn handle_response(response: reqwest::Response, negative_status_codes: &Vec<u16>) {
     // Get the status code and the path from the response
     let status = response.status();
+    let full_url = response.url().to_string();
     let response_size = response.content_length().unwrap_or(0);
     let path = response.url().path();
 
@@ -28,19 +29,26 @@ pub async fn handle_response(response: reqwest::Response, negative_status_codes:
     }
 
     // Check the status code and print the path and status code (as a string) with the corresponding color
+    // TODO: There's gotta be a better way to do this
     if status.is_success() {
-        let status_str = format!("[Status: {}]  (Size: {})", status.as_str(), response_size);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str.green().bold(), DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_part = format!("[Status: {}]", status.as_str()).green().bold();
+        let full_url_part = format!("[--> {}]", full_url).blue().bold();
+        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
+        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
     }
     
     if status.is_redirection() {
-        let status_str = format!("[Status: {}]  (Size: {})", status.as_str(), response_size);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str.yellow().bold(), DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_part = format!("[Status: {}]", status.as_str()).yellow().bold();
+        let full_url_part = format!("[--> {}]", full_url).blue().bold();
+        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
+        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
     }
     
     if status.is_client_error() {
-        let status_str = format!("[Status: {}]  (Size: {})", status.as_str(), response_size);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str.red().bold(), DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_part = format!("[Status: {}]", status.as_str()).red().bold();
+        let full_url_part = format!("[--> {}]", full_url).blue().bold();
+        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
+        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
     }}
 
 pub async fn bust_url(scanner: &Scanner) -> Result<(), Box<dyn std::error::Error>> {
