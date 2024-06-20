@@ -43,6 +43,6 @@ pub struct Args {
     pub user_agent: String,
 
     /// Follow redirects
-    #[arg(short='r', long, default_value="none")]
+    #[arg(short='r', long, default_value="none", value_parser=["none", "follow"])]
     pub redirect_policy: String,
 }
