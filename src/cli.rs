@@ -45,4 +45,8 @@ pub struct Args {
     /// Follow redirects
     #[arg(short='r', long, default_value="none", value_parser=["none", "follow"])]
     pub redirect_policy: String,
+
+    /// HTTP Timeout
+    #[arg(short, long, default_value_t=10)]
+    pub timeout: u64,
 }

@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use reqwest::{Client, ClientBuilder};
 use crate::{cli, utils};
 use colored::*;
@@ -10,6 +12,7 @@ pub struct Scanner {
     pub user_agent: String,
     pub client: Client,
     pub redirect_policy: String,
+    pub timeout: u64,
     pub negative_status_codes: Vec<u16>,
 }
 
@@ -26,6 +29,7 @@ impl Scanner {
         let client: Client = ClientBuilder::new()
             .user_agent(args.user_agent.clone())
             .redirect(redirect_policy)
+            .timeout(Duration::new(args.timeout, 0))
             .build()
             .unwrap();
 
@@ -37,6 +41,7 @@ impl Scanner {
             client: client,
             redirect_policy: args.redirect_policy,
             negative_status_codes: args.status_codes_blacklist.iter().map(|x| x.parse::<u16>().unwrap()).collect(),
+            timeout: args.timeout,
         }
     }
 
