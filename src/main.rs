@@ -4,6 +4,7 @@ mod cli;
 mod utils;
 mod banner;
 mod buster;
+mod progress;
 
 #[tokio::main]
 async fn main() {

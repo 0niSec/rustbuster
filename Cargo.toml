@@ -10,3 +10,4 @@ url = "2.5.1"
 textwrap = "0.16.1"
 reqwest = "0.12.5"
 tokio = {version = "1.38.0", features = ["full"]}
+indicatif = "0.17.8"

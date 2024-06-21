@@ -51,6 +51,9 @@ impl Scanner {
         utils::http::bust_url(&buster).await?;
 
         println!("{}", format!("Scanning {} with wordlist {}...", &self.url, &self.wordlist).truecolor(255, 79, 0));
+        
+        // Print a blank line to give the progress bar some space
+        println!();
 
         Ok(())
     }
