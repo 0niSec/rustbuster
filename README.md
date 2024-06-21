@@ -64,7 +64,7 @@ If you find a bug, please also feel free to <a href="https://github.com/0nisec/r
 
 This tool is meant to be used ethically in Capture the Flag programs such as [MetaCTF](https://metactf.com/), [Hack the Box](https://hackthebox.com), or [TryHackMe](https://tryhackme.com) (to name a few) or on sanctioned penetration tests that have a formal contract and drawn out engagement. Please do not use this tool on infrastructure that you do not have permission to. 
 
-## Contributors
+# Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
