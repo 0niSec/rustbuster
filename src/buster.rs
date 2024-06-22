@@ -5,7 +5,7 @@ use crate::{cli, utils};
 use colored::*;
 use clap::Parser;
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct Scanner {
     pub url: String,
     pub wordlist: String,
@@ -14,6 +14,7 @@ pub struct Scanner {
     pub redirect_policy: String,
     pub timeout: u64,
     pub negative_status_codes: Vec<u16>,
+    pub num_threads: u8,
 }
 
 impl Scanner {
@@ -42,6 +43,7 @@ impl Scanner {
             redirect_policy: args.redirect_policy,
             negative_status_codes: args.status_codes_blacklist.iter().map(|x| x.parse::<u16>().unwrap()).collect(),
             timeout: args.timeout,
+            num_threads: args.threads,
         }
     }
 
@@ -49,11 +51,6 @@ impl Scanner {
         let buster = Scanner::new(cli::Args::parse());
 
         utils::http::bust_url(&buster).await?;
-
-        println!("{}", format!("Scanning {} with wordlist {}...", &self.url, &self.wordlist).truecolor(255, 79, 0));
-        
-        // Print a blank line to give the progress bar some space
-        println!();
 
         Ok(())
     }

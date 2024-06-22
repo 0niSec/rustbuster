@@ -15,10 +15,14 @@ pub fn validate_url(url: &str) -> Result<Url, url::ParseError> {
 }
 
 // Function to concatenate the base URL with the wordlist entries
-pub fn build_url(base_url: &Url, wordlist_entry: &str) -> Result<Url, url::ParseError> {
-    let mut url = Url::parse(base_url.as_str())?;
+pub fn build_url(base_url: &Url, wordlist_entry: &String) -> Result<Url, url::ParseError> {
+    let built_url = base_url.join(wordlist_entry);
 
-    url.set_path(wordlist_entry);
-
-    Ok(url)
+    match built_url {
+        Ok(url) => Ok(url),
+        Err(e) => {
+            eprintln!("{}", format!("Error: {}", e).red());
+            std::process::exit(1);
+        }
+    }
 }
