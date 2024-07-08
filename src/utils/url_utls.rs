@@ -1,5 +1,5 @@
-use url::Url;
 use colored::*;
+use url::Url;
 
 // Function to parse the String URL into a URL struct so it can be used later for reqwest
 pub fn validate_url(url: &str) -> Result<Url, url::ParseError> {

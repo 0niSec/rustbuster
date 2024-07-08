@@ -1,11 +1,11 @@
 use clap::Parser;
 use tokio::sync::mpsc;
 
-mod cli;
-mod utils;
 mod banner;
 mod buster;
+mod cli;
 mod progress;
+mod utils;
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +25,6 @@ async fn main() {
 
     // Create a new scanner instance
     let scanner = buster::Scanner::new(args);
-
 
     // Start the scan
     banner::starting_scan();

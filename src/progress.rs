@@ -14,7 +14,7 @@ impl Progress {
                 eprintln!("Failed to set progress bar style: {}", e);
                 ProgressStyle::default_bar() // Use default style on error
             }));
-            Self { progress_bar }
+        Self { progress_bar }
     }
 
     pub fn inc(&self, step: u64) {

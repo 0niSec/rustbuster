@@ -1,13 +1,16 @@
 use url::Url;
 
 use crate::buster::Scanner;
-use crate::utils;
 use crate::progress::Progress;
+use crate::utils;
 use colored::*;
 
 const DISPLAY_INDENT: usize = 24;
 
-pub async fn build_request(target_url: Url, client: &reqwest::Client) -> reqwest::Result<reqwest::Response> {
+pub async fn build_request(
+    target_url: Url,
+    client: &reqwest::Client,
+) -> reqwest::Result<reqwest::Response> {
     match client.get(target_url).send().await {
         Ok(response) => Ok(response),
         Err(e) => {
@@ -22,7 +25,12 @@ pub fn handle_response(response: reqwest::Response, negative_status_codes: &Vec<
     let status = response.status();
     let full_url = response.url().to_string();
     let binding = reqwest::header::HeaderValue::from_static("Unknown location");
-    let redirected_url = response.headers().get("location").unwrap_or(&binding).to_str().unwrap_or("Invalid UTF-8 sequence");
+    let redirected_url = response
+        .headers()
+        .get("location")
+        .unwrap_or(&binding)
+        .to_str()
+        .unwrap_or("Invalid UTF-8 sequence");
     let response_size = response.content_length().unwrap_or(0);
     let path = response.url().path();
 
@@ -36,22 +44,46 @@ pub fn handle_response(response: reqwest::Response, negative_status_codes: &Vec<
     if status.is_success() {
         let status_part = format!("[Status: {}]", status.as_str()).green().bold();
         let full_url_part = format!("[--> {}]", full_url).blue().bold();
-        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_str = format!(
+            "{} (Size: {}) {:>2} {}",
+            status_part, response_size, "", full_url_part
+        );
+        println!(
+            "{:<DISPLAY_INDENT$} {}",
+            path,
+            status_str,
+            DISPLAY_INDENT = DISPLAY_INDENT as usize
+        );
     }
-    
+
     if status.is_redirection() {
         let status_part = format!("[Status: {}]", status.as_str()).yellow().bold();
         let full_url_part = format!("[--> {}]", redirected_url).blue().bold();
-        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_str = format!(
+            "{} (Size: {}) {:>2} {}",
+            status_part, response_size, "", full_url_part
+        );
+        println!(
+            "{:<DISPLAY_INDENT$} {}",
+            path,
+            status_str,
+            DISPLAY_INDENT = DISPLAY_INDENT as usize
+        );
     }
-    
+
     if status.is_client_error() {
         let status_part = format!("[Status: {}]", status.as_str()).red().bold();
         let full_url_part = format!("[--> {}]", full_url).blue().bold();
-        let status_str = format!("{} (Size: {}) {:>2} {}", status_part, response_size, "", full_url_part);
-        println!("{:<DISPLAY_INDENT$} {}", path, status_str, DISPLAY_INDENT = DISPLAY_INDENT as usize);
+        let status_str = format!(
+            "{} (Size: {}) {:>2} {}",
+            status_part, response_size, "", full_url_part
+        );
+        println!(
+            "{:<DISPLAY_INDENT$} {}",
+            path,
+            status_str,
+            DISPLAY_INDENT = DISPLAY_INDENT as usize
+        );
     }
 }
 
@@ -75,7 +107,7 @@ pub async fn bust_url(scanner: &Scanner) -> Result<(), Box<dyn std::error::Error
         let constructed_url = utils::url_utls::build_url(&target_url, &word)?;
         let response = build_request(constructed_url, &client).await?;
 
-        // 
+        //
         progress_bar.progress_bar.suspend(|| {
             handle_response(response, &scanner.negative_status_codes);
         });

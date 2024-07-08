@@ -1,7 +1,7 @@
+use colored::*;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
-use colored::*;
 
 // Function to check that the wordlist is a valid path and return the PathBuf
 pub fn validate_wordlist_path(wordlist: &str) -> std::path::PathBuf {
@@ -13,7 +13,10 @@ pub fn validate_wordlist_path(wordlist: &str) -> std::path::PathBuf {
         match File::open(&path) {
             Ok(_) => path.to_path_buf(),
             Err(e) => {
-                eprintln!("{}", format!("Error: The wordlist file cannot be read: {}", e).red());
+                eprintln!(
+                    "{}",
+                    format!("Error: The wordlist file cannot be read: {}", e).red()
+                );
                 std::process::exit(1);
             }
         }
@@ -35,15 +38,21 @@ pub fn is_empty(wordlist: &str) -> bool {
                 Ok(_) => {
                     eprintln!("{}", format!("Error: The wordlist file is empty.").red());
                     std::process::exit(1);
-                },
+                }
                 Err(e) => {
-                    eprintln!("{}", format!("Error: Unable to read the wordlist file metadata: {}", e).red());
+                    eprintln!(
+                        "{}",
+                        format!("Error: Unable to read the wordlist file metadata: {}", e).red()
+                    );
                     std::process::exit(1);
                 }
             }
-        },
+        }
         Err(e) => {
-            eprintln!("{}", format!("Error: The wordlist file cannot be read: {}", e).red());
+            eprintln!(
+                "{}",
+                format!("Error: The wordlist file cannot be read: {}", e).red()
+            );
             std::process::exit(1);
         }
     }
@@ -57,5 +66,9 @@ pub fn read_wordlist(wordlist_path: &PathBuf) -> Vec<String> {
     // Ignore lines starting with '#'
     // This should hopefully be good enough for most wordlists
     // No idea how gobuster does it for every single wordlist lol
-    reader.lines().filter_map(Result::ok).filter(|line| !line.starts_with('#')).collect()
+    reader
+        .lines()
+        .filter_map(Result::ok)
+        .filter(|line| !line.starts_with('#'))
+        .collect()
 }

@@ -1,11 +1,11 @@
 use std::time::Duration;
 
-use reqwest::{Client, ClientBuilder};
 use crate::{cli, utils};
-use colored::*;
 use clap::Parser;
+use colored::*;
+use reqwest::{Client, ClientBuilder};
 
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct Scanner {
     pub url: String,
     pub wordlist: String,
@@ -35,14 +35,17 @@ impl Scanner {
             .build()
             .unwrap();
 
-
         Self {
             url: args.url,
             user_agent: args.user_agent,
             wordlist: args.wordlist,
             client: client,
             redirect_policy: args.redirect_policy,
-            negative_status_codes: args.status_codes_blacklist.iter().map(|x| x.parse::<u16>().unwrap()).collect(),
+            negative_status_codes: args
+                .status_codes_blacklist
+                .iter()
+                .map(|x| x.parse::<u16>().unwrap())
+                .collect(),
             timeout: args.timeout,
             num_threads: args.threads,
         }

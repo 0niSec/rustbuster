@@ -9,12 +9,16 @@ pub fn print_banner() {
     let version = env!("CARGO_PKG_VERSION");
 
     // Print the banner
-    println!("{}", "
+    println!(
+        "{}",
+        "
     ______                __   __                 __              
     |   __ \\.--.--.-----.|  |_|  |--.--.--.-----.|  |_.-----.----.
     |      <|  |  |__ --||   _|  _  |  |  |__ --||   _|  -__|   _|
     |___|__||_____|_____||____|_____|_____|_____||____|_____|__|
-    ".truecolor(255, 79, 0));
+    "
+        .truecolor(255, 79, 0)
+    );
 
     // Print the version and GitHub link
     println!("{}{}", "rustbuster v ", version);
@@ -35,10 +39,25 @@ pub fn print_info(args: &cli::Args) {
     // TODO: Add more information to the banner
     println!("{}", "=".repeat(WRAP_WIDTH));
     println!("{:<width$} {}", "[+] URL:", wrapped_url, width = 30);
-    println!("{:<width$} {}", "[+] Wordlist:", wrapped_wordlist, width = 30);
+    println!(
+        "{:<width$} {}",
+        "[+] Wordlist:",
+        wrapped_wordlist,
+        width = 30
+    );
     println!("{:<width$} {}", "[+] Threads:", args.threads, width = 30);
-    println!("{:<width$} {}", "[+] Negative Status Codes:", args.status_codes_blacklist.join(", "), width = 30);
-    println!("{:<width$} {}", "[+] User Agent:", args.user_agent, width = 30);
+    println!(
+        "{:<width$} {}",
+        "[+] Negative Status Codes:",
+        args.status_codes_blacklist.join(", "),
+        width = 30
+    );
+    println!(
+        "{:<width$} {}",
+        "[+] User Agent:",
+        args.user_agent,
+        width = 30
+    );
     println!("{:<width$} {}", "[+] Timeout:", args.timeout, width = 30);
     println!("{}", "=".repeat(WRAP_WIDTH));
 }

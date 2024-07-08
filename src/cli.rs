@@ -1,5 +1,4 @@
 /// This file contains the command line arguments parser
-
 use clap::Parser;
 
 #[derive(Parser, Debug)]
@@ -19,7 +18,7 @@ pub struct Args {
     pub wordlist: String,
 
     /// The number of concurrent threads
-    #[arg(short, long, default_value_t=10)]
+    #[arg(short, long, default_value_t = 10)]
     pub threads: u8,
 
     /// Don't display the banner and other info
@@ -47,6 +46,6 @@ pub struct Args {
     pub redirect_policy: String,
 
     /// HTTP Timeout
-    #[arg(long, default_value_t=10)]
+    #[arg(long, default_value_t = 10)]
     pub timeout: u64,
 }
