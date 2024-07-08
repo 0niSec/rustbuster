@@ -30,6 +30,7 @@ impl Scanner {
         let client: Client = ClientBuilder::new()
             .user_agent(args.user_agent.clone())
             .redirect(redirect_policy)
+            .https_only(false)
             .timeout(Duration::new(args.timeout, 0))
             .build()
             .unwrap();
